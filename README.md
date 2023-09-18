@@ -1,5 +1,10 @@
 # oracle-try
 
+## DB起動
+```
+docker run --name oracle-19c -p 1521:1521 -e ORACLE_SID=orcl -e ORACLE_PWD=manager -e ORACLE_CHARACTERSET=AL32UTF8 -v "C:/oracle":/opt/oracle/oradata doctorkirk/oracle-19c
+```
+
 ## ユーザ作成
 ```
 CREATE USER "APP" IDENTIFIED BY "APP";
