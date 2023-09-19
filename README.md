@@ -1,5 +1,15 @@
 # oracle-try
 
+## 前提
+
+* Windows 10 or 11
+* dockerデスクトップをインストールかつ起動
+* Oracleアカウント作成
+* Oracle SQL Developerをダウンロード配置
+
+## OracleDBイメージ作成
+未
+
 ## DB起動
 ```
 docker run --name oracle-19c -p 1521:1521 -e ORACLE_SID=orcl -e ORACLE_PWD=manager -e ORACLE_CHARACTERSET=AL32UTF8 -v "C:/oracle":/opt/oracle/oradata doctorkirk/oracle-19c
@@ -47,6 +57,16 @@ CREATE TABLE KOKYAKU_EXPORT_NG (
 
 ## データ作成
 ```
+以下スクリプトで100万件のCSVデータ作成し、SQLDeveloperでimportする
+
+kokyaku_gen_data.py
+card_gen_data.py
+```
+
+or
+
+```
+4レコード作成
 Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234010 ','001','0');
 Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234020 ','002','0');
 Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234040 ','004','1');
@@ -60,8 +80,34 @@ Insert into KOKYAKU (KOKYAKU_ID,NAME,JUSHO) values ('004','TAKAHASHI','九州');
 
 ## insert into select
 ```
-delete from kokyaku_export_ok;
-delete from kokyaku_export_ng;
-insert into kokyaku_export_ok SELECT * from kokyaku;
-insert into kokyaku_export_ng SELECT * from kokyaku;
+# 削除
+DELETE FROM KOKYAKU_EXPORT_OK;
+DELETE FROM KOKYAKU_EXPORT_NG;
+
+# 条件無し
+INSERT INTO KOKYAKU_EXPORT_OK SELECT * FROM KOKYAKU;
+INSERT INTO KOKYAKU_EXPORT_NG SELECT * FROM KOKYAKU;
+
+# 条件有り
+INSERT INTO KOKYAKU_EXPORT_OK
+    SELECT
+        KOKYAKU.KOKYAKU_ID,
+        KOKYAKU.NAME,
+        KOKYAKU.JUSHO
+    FROM
+             KOKYAKU
+        INNER JOIN CARD ON KOKYAKU.KOKYAKU_ID = CARD.KOKYAKU_ID
+    WHERE
+        CARD.STATUS = '0';
+
+INSERT INTO KOKYAKU_EXPORT_NG
+    SELECT
+        KOKYAKU.KOKYAKU_ID,
+        KOKYAKU.NAME,
+        KOKYAKU.JUSHO
+    FROM
+             KOKYAKU
+        INNER JOIN CARD ON KOKYAKU.KOKYAKU_ID = CARD.KOKYAKU_ID
+    WHERE
+        CARD.STATUS = '1';
 ```

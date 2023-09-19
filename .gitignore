@@ -1,0 +1,4 @@
+*.csv
+
+### VS Code ###
+.vscode/
