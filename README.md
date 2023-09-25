@@ -66,16 +66,24 @@ card_gen_data.py
 or
 
 ```
-4レコード作成
-Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234010 ','001','0');
-Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234020 ','002','0');
-Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234040 ','004','1');
-Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234021 ','002','0');
+DELETE FROM KOKYAKU;
+DELETE FROM CARD;
 
+4レコード作成
 Insert into KOKYAKU (KOKYAKU_ID,NAME,JUSHO) values ('001','SUZUKI','東京');
 Insert into KOKYAKU (KOKYAKU_ID,NAME,JUSHO) values ('002','YAMADA','大阪');
 Insert into KOKYAKU (KOKYAKU_ID,NAME,JUSHO) values ('003','SATO','名古屋');
 Insert into KOKYAKU (KOKYAKU_ID,NAME,JUSHO) values ('004','TAKAHASHI','九州');
+Insert into KOKYAKU (KOKYAKU_ID,NAME,JUSHO) values ('005','YAMASHIRO','沖縄');
+
+Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234010 ','001','0');
+Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234020 ','002','0');
+Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234021 ','002','0');
+Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234022 ','002','0');
+Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234040 ','004','1');
+Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234041 ','004','0');
+Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234042 ','004','1');
+Insert into CARD (CARD_NUM,KOKYAKU_ID,STATUS) values ('123456781234050 ','005','1');
 ```
 
 ## insert into select
@@ -110,4 +118,30 @@ INSERT INTO KOKYAKU_EXPORT_NG
         INNER JOIN CARD ON KOKYAKU.KOKYAKU_ID = CARD.KOKYAKU_ID
     WHERE
         CARD.STATUS = '1';
+
+# CARDのstatus='1'が1レコード以上あるKOKYAKUをSELECT
+select
+    KOKYAKU.KOKYAKU_ID,
+    KOKYAKU.NAME,
+    KOKYAKU.JUSHO
+from
+    KOKYAKU
+INNER JOIN
+    (select
+        card.kokyaku_id,
+        case
+          when sum(
+            case
+                when card.status = '1' then 1
+                else 0
+            end ) > 0 then 1
+          else 0
+        end hantei
+    from
+        card
+    group by
+        card.kokyaku_id
+    ) C ON KOKYAKU.KOKYAKU_ID = C.KOKYAKU_ID
+where
+    C.hantei = 1;
 ```
