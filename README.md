@@ -118,30 +118,87 @@ INSERT INTO KOKYAKU_EXPORT_NG
         INNER JOIN CARD ON KOKYAKU.KOKYAKU_ID = CARD.KOKYAKU_ID
     WHERE
         CARD.STATUS = '1';
+```
+
+## insert into select 応用
+```
+#CARDを顧客IDで集約し、レコードの合計を求める
+SELECT
+    CARD.KOKYAKU_ID,
+    COUNT(*)
+FROM
+    CARD
+GROUP BY
+    CARD.KOKYAKU_ID;
+
+
+#CARDを顧客IDで集約し、ステータス=1のレコード数の合計を求める
+SELECT
+    CARD.KOKYAKU_ID,
+    COUNT(*)
+FROM
+    CARD
+WHERE
+    CARD.STATUS = '1'
+GROUP BY
+    CARD.KOKYAKU_ID;
+
+
+#CARDを顧客IDで集約し、ステータス=1のレコード数の合計をゼロも含めて求める
+SELECT
+    CARD.KOKYAKU_ID,
+    SUM(
+        CASE
+            WHEN CARD.STATUS = '1' THEN 1
+            ELSE 0
+        END
+    ) SUM
+FROM
+    CARD
+GROUP BY
+    CARD.KOKYAKU_ID;
+
+
+#CARDを顧客IDで集約し、ステータス=1があれば判定フラグ=1を返す、なければ判定フラグ=0
+SELECT
+    CARD.KOKYAKU_ID,
+    CASE
+        WHEN SUM(
+            CASE
+                WHEN CARD.STATUS = '1' THEN 1
+                ELSE 0
+            END ) > 0 THEN 1
+        ELSE 0
+    END HANTEI
+FROM
+    CARD
+GROUP BY
+    CARD.KOKYAKU_ID;
+
 
 # CARDのstatus='1'が1レコード以上あるKOKYAKUをSELECT
-select
+SELECT
     KOKYAKU.KOKYAKU_ID,
     KOKYAKU.NAME,
     KOKYAKU.JUSHO
-from
+FROM
     KOKYAKU
 INNER JOIN
-    (select
-        card.kokyaku_id,
-        case
-          when sum(
-            case
-                when card.status = '1' then 1
-                else 0
-            end ) > 0 then 1
-          else 0
-        end hantei
-    from
-        card
-    group by
-        card.kokyaku_id
+    (SELECT
+        CARD.KOKYAKU_ID,
+        CASE
+          WHEN SUM(
+            CASE
+                WHEN CARD.STATUS = '1' THEN 1
+                ELSE 0
+            END ) > 0 THEN 1
+          ELSE 0
+        END HANTEI
+    FROM
+        CARD
+    GROUP BY
+        CARD.KOKYAKU_ID
     ) C ON KOKYAKU.KOKYAKU_ID = C.KOKYAKU_ID
-where
-    C.hantei = 1;
+WHERE
+    C.HANTEI = 1;
 ```
