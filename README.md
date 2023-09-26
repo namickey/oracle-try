@@ -203,7 +203,7 @@ WHERE
     C.HANTEI = 1;
 
 
-#DISTINCTを使用して、上記と同じ結果
+#DISTINCTとjoinを使用して、上記と同じ結果
 SELECT
     KOKYAKU.KOKYAKU_ID,
     KOKYAKU.NAME,
@@ -218,4 +218,20 @@ INNER JOIN
     WHERE
         CARD.STATUS = '1'
     ) C ON KOKYAKU.KOKYAKU_ID = C.KOKYAKU_ID;
+
+
+#DISTINCTとIN句を使用して、上記と同じ結果。※IN句は大量データは不可
+SELECT
+    KOKYAKU.KOKYAKU_ID,
+    KOKYAKU.NAME,
+    KOKYAKU.JUSHO
+FROM
+    KOKYAKU
+where
+   KOKYAKU.KOKYAKU_ID in (SELECT
+        DISTINCT CARD.KOKYAKU_ID
+    FROM
+        CARD
+    WHERE
+        CARD.STATUS = '1')
 ```
