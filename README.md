@@ -8,7 +8,7 @@
 * Oracle SQL Developerをダウンロード配置
 
 ## OracleDBイメージ作成
-未
+main
 
 ## DB起動
 ```
