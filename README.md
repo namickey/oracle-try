@@ -1,6 +1,6 @@
 # oracle-try bbb
 
-## 前提 zzz
+## 前提 KKK
 
 * Windows 10 or 11
 * dockerデスクトップをインストールかつ起動
