@@ -3,9 +3,11 @@
 ## 前提
 
 * Windows 10 or 11
-* dockerデスクトップをインストールかつ起動
-* Oracleアカウント作成
-* Oracle SQL Developerをダウンロード配置
+* dockerデスクトップをインストールし、起動しておく ※個人利用は無償
+  * インストーラーをダウンロードしインストール、マシン再起動
+  * wslのバージョンが古い場合は、コマンドプロンプトにて`wsl --update`を実行
+* Oracle SQL Developerをダウンロード、解凍して配置
+  * ダウンロードにはOracleアカウント作成が必要
 
 ## OracleDBイメージ作成
 未
