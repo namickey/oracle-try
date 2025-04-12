@@ -6,5 +6,5 @@ TRAILING NULLCOLS
 (
     KOKYAKU_ID,
     NAME,
-    JUSHO,
+    JUSHO
 )
