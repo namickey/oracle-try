@@ -1,28 +1,30 @@
 oracle公式のDockerイメージを使ってDB起動する。
 
+## dockerイメージ作成
 ```shell
-dockerイメージ作成
 git clone https://github.com/oracle/docker-images.git
 cd OracleDatabase/SingleInstance/dockerfiles
 ./buildContainerImage.sh -v 23.6.0 -f
 ```
 
+## コンテナ起動
 ```shell
-コンテナ起動
 docker run -d --name oracledb -p 1521:1521 -e ORACLE_PWD=admin oracle/database:23.6.0-free
 ```
 
+## 全てのユーザにパスワード設定
 ```shell
-全てのユーザにパスワード設定
 docker exec -it oracledb bash
 bash setPassword.sh admin
 ```
 
+## SQLPLUSでDB接続(CDBに接続)
 ```shell
-SQLPLUSでDB接続(CDBに接続)
 docker exec -it oracledb sqlplus / as sysdba
+```
 
-SQLPLUSでDB接続(PDBに接続)
+## SQLPLUSでDB接続(PDBに接続)
+```shell
 docker exec -it oracledb bash
 sqlplus system/admin@//localhost/FREEPDB1
 ```
@@ -41,4 +43,24 @@ select pdb_name from cdb_pdbs;
 ユーザ：system
 パスワード：admin
 PDBサービス名：FREEPDB1
+
+## APPユーザ作成
+```
+CREATE USER "APP" IDENTIFIED BY "APP";
+ALTER USER "APP" DEFAULT TABLESPACE "USERS" TEMPORARY TABLESPACE "TEMP" ACCOUNT UNLOCK ;
+GRANT CREATE SESSION TO "APP";
+GRANT UNLIMITED TABLESPACE TO "APP";
+GRANT CREATE TABLE TO "APP";
+```
+
+## テーブル作成
+```
+CREATE TABLE KOKYAKU (
+    "KOKYAKU_ID"   VARCHAR2(10) NOT NULL,
+    "NAME" VARCHAR2(60),
+    "JUSHO" VARCHAR2(100),
+    CONSTRAINT "KOKYAKU_PK" PRIMARY KEY ( "KOKYAKU_ID" )
+);
+```
+
 
