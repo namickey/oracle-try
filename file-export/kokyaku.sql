@@ -2,8 +2,6 @@
 SET HEADING OFF
 -- 実行結果の行数を表示しない
 SET FEEDBACK OFF
--- カラムの区切り文字をカンマに設定
-SET COLSEP ','
 -- 1行の最大文字数を設定
 SET LINESIZE 1000
 -- 行末の余分なスペースを削除
@@ -15,7 +13,7 @@ SET TERMOUT OFF
 
 SPOOL kokyaku.csv;
 
-SELECT KOKYAKU_ID, NAME, JUSHO FROM kokyaku;
+SELECT KOKYAKU_ID ||','|| NAME ||','|| JUSHO FROM kokyaku;
 
 SPOOL OFF;
 
