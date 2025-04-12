@@ -4,6 +4,7 @@ SET COLSEP ','           -- カラムの区切り文字をカンマに設定
 SET LINESIZE 1000        -- 1行の最大文字数を設定
 SET TRIMSPOOL ON         -- 行末の余分なスペースを削除
 SET PAGESIZE 0           -- ページ区切りを無効化
+SET TERMOUT OFF          -- スクリプト実行中の出力を抑制
 
 SPOOL kokyaku.csv;
 
