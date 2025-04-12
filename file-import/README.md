@@ -17,6 +17,6 @@ sqlplus APP/APP@//localhost/FREEPDB1
 
 ## Execute `import.ctl`
 ```shell
-sqlldr userid=APP/APP@database control=import.ctl log=import.log
+sqlldr userid=APP/APP@//localhost/FREEPDB1 control=import.ctl log=import.log
 ```
 
