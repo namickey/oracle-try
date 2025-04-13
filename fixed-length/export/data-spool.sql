@@ -13,7 +13,7 @@ SET TERMOUT OFF
 
 SPOOL item.txt;
 
-SELECT ID || KBN || NAME || PRICE FROM item;
+SELECT LPAD(ID, 3, '0') || KBN || RPAD(NAME,10,' ') || LPAD(PRICE,8,'0') FROM item;
 
 SPOOL OFF;
 
