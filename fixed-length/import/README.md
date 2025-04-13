@@ -5,6 +5,7 @@ sqlplus APP/APP@//localhost/FREEPDB1
 ```sql
 CREATE TABLE ITEM (
     "ID"   NUMBER NOT NULL,
+    "KBN" CHAR(1),
     "PRICE" NUMBER,
     CONSTRAINT "ITEM_PK" PRIMARY KEY ( "ID" )
 );

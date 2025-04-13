@@ -3,9 +3,10 @@ CHARACTERSET UTF8
 INFILE 'item.txt'
 REPLACE
 INTO TABLE item
-WHEN (position(0:1) == "2")
+WHEN (kbn = "2")
 TRAILING NULLCOLS
 (
     ID SEQUENCE(MAX,1),
+    KBN position(1:1),
     PRICE position(2:6)
 )
