@@ -8,6 +8,6 @@ TRAILING NULLCOLS
 (
     ID SEQUENCE(MAX,1),
     KBN position(1:1),
-    NAME position(1:11),
+    NAME position(2:11),
     PRICE position(12:16)
 )
