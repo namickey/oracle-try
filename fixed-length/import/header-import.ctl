@@ -7,5 +7,5 @@ WHEN (kbn = "1")
 TRAILING NULLCOLS
 (
     KBN position(1:1),
-    DATE position(2:9)
+    CREATED_AT position(2:9)
 )
