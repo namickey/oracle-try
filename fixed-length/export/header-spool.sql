@@ -5,7 +5,7 @@ SET FEEDBACK OFF
 -- 1行の最大文字数を設定
 SET LINESIZE 1000
 -- 行末の余分なスペースを削除
-SET TRIMSPOOL ON
+SET TRIMSPOOL OFF
 -- ページ区切りを無効化
 SET PAGESIZE 0
 -- スクリプト実行中の出力を抑制
@@ -13,7 +13,7 @@ SET TERMOUT OFF
 
 SPOOL item.txt APPEND;
 
-SELECT KBN || CREATED_AT || LPAD(' ',11, ' ') FROM header;
+SELECT KBN || CREATED_AT || LPAD('',11, ' ') FROM header;
 
 SPOOL OFF;
 
