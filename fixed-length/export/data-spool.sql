@@ -11,7 +11,7 @@ SET PAGESIZE 0
 -- スクリプト実行中の出力を抑制
 SET TERMOUT OFF
 
-SPOOL item.txt;
+SPOOL item.txt APPEND;
 
 SELECT LPAD(ID, 3, '0') || KBN || RPAD(NAME,10,' ') || LPAD(PRICE,8,'0') FROM item;
 
