@@ -11,9 +11,9 @@ SET PAGESIZE 0
 -- スクリプト実行中の出力を抑制
 SET TERMOUT OFF
 
-SPOOL item.txt APPEND;
+SPOOL item.txt;
 
-SELECT 'aa' || LPAD('',22, ' ') FROM header where rownum = 1;
+SELECT KBN || CREATED_AT || LPAD('',11, ' ') || CHR(13) FROM header;
 
 SPOOL OFF;
 

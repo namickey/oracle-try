@@ -13,7 +13,7 @@ SET TERMOUT OFF
 
 SPOOL item.txt APPEND;
 
-SELECT 'aa' || LPAD('',22, ' ') FROM header where rownum = 1;
+SELECT 'aa' || LPAD('',22, ' ') || CHR(13) FROM header where rownum = 1;
 
 SPOOL OFF;
 
