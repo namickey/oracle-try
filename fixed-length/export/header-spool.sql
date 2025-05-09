@@ -13,7 +13,7 @@ SET TERMOUT OFF
 
 SPOOL item.txt;
 
-SELECT KBN || CREATED_AT || LPAD('',11, ' ') FROM header;
+SELECT KBN || CREATED_AT || LPAD(' ',13, ' ') FROM header;
 
 SPOOL OFF;
 
