@@ -11,7 +11,7 @@ SET PAGESIZE 0
 -- スクリプト実行中の出力を抑制
 SET TERMOUT OFF
 
-SPOOL item.txt APPEND;
+SPOOL send-result.txt APPEND;
 
 SELECT 'END' || LPAD(' ',21, ' ') || CHR(13) FROM CHECK_RESULT_SEND where rownum = 1;
 

@@ -11,7 +11,7 @@ SET PAGESIZE 0
 -- スクリプト実行中の出力を抑制
 SET TERMOUT OFF
 
-SPOOL item.txt;
+SPOOL send-result.txt;
 
 SELECT KBN || CREATED_AT || LPAD(' ',15, ' ') || CHR(13) FROM REQ_HEADER;
 
