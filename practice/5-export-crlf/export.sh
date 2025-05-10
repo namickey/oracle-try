@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sqlplus APP/APP@//localhost/FREEPDB1 @trancate.sql
+sqlplus APP/APP@//localhost/FREEPDB1 @truncate.sql
 
 sqlplus APP/APP@//localhost/FREEPDB1 @transport.sql
 
