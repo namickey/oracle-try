@@ -1,0 +1,6 @@
+120250101       
+2pen       00100
+2notebook  00200
+2desk      16000
+2paperclips00300
+9end            
