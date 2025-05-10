@@ -1,6 +1,6 @@
 
-f = open('../4-import/check-result.txt', 'w')
-for line in open('../2-export/check-req.txt', ):
+f = open('../4-import/check-result.txt', 'w', newline='\n')
+for line in open('../2-export/check-req.txt'):
     if not line.startswith('2'):
         continue
     print(line[1:4])
