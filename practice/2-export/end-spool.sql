@@ -13,7 +13,7 @@ SET TERMOUT OFF
 
 SPOOL check-req.txt APPEND;
 
-SELECT '9end' || LPAD(' ',19, ' ') FROM req where rownum = 1;
+SELECT '9end' || LPAD(' ',18, ' ') FROM req where rownum = 1;
 
 SPOOL OFF;
 
