@@ -29,3 +29,8 @@ sqlldr userid=APP/APP@//localhost/FREEPDB1 control=data-import.ctl log=data-impo
 sqlplus APP/APP@//localhost/FREEPDB1
 select * from check_result;
 ```
+
+## githubでの管理で実行権限付与
+```cmd
+git update-index --add --chmod=+x export.sh
+```
