@@ -13,7 +13,7 @@ SET TERMOUT OFF
 
 SPOOL check-req.txt;
 
-SELECT KBN || CREATED_AT || LPAD(' ',13, ' ') FROM header;
+SELECT KBN || CREATED_AT || LPAD(' ',13, ' ') FROM req_header;
 
 SPOOL OFF;
 
