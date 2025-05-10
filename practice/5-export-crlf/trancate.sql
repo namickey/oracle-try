@@ -1,0 +1,1 @@
+trancate table CHECK_RESULT_SEND;
