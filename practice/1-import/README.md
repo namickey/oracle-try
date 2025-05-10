@@ -28,3 +28,8 @@ sqlldr userid=APP/APP@//localhost/FREEPDB1 control=header-import.ctl log=header-
 sqlplus APP/APP@//localhost/FREEPDB1
 select * from item;
 ```
+
+## githubでの管理で実行権限付与
+```cmd
+git update-index --add --chmod=+x import.sh
+```
