@@ -17,3 +17,4 @@ from
     inner join REQ b
     on a.ID = b.ID
 ;
+EXIT;
