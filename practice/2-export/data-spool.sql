@@ -13,7 +13,7 @@ SET TERMOUT OFF
 
 SPOOL check-req.txt APPEND;
 
-SELECT LPAD(ID, 3, '0') || KBN || RPAD(NAME,10,' ') || LPAD(PRICE,8,'0') FROM req;
+SELECT KBN || LPAD(ID, 3, '0') || RPAD(NAME,10,' ') || LPAD(PRICE,8,'0') FROM req;
 
 SPOOL OFF;
 
