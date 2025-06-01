@@ -29,9 +29,9 @@ insert into ITEMS values (1,'20250101','2', 'ペン', '1000001', 1, sysdate);
 ```
 
 ## 増幅
-* 増幅元データをselectし、ループ回数（counter_i）をキー項目に設定
+* 増幅元データ1件をselectし、ループ回数（counter_i）をキー項目に設定
 * 1万件毎にコミット
-* 99万件で20秒程度
+* 99万件で10秒程度
 ```sql
 begin
   for counter_i in 2..999999 loop
