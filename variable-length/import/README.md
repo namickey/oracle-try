@@ -16,6 +16,15 @@ git clone https://github.com/namickey/oracle-try.git
 cd oracle-try
 
 sqlplus APP/APP@//localhost/FREEPDB1
+
+## テーブル作成
+CREATE TABLE KOKYAKU (
+    "KOKYAKU_ID"   VARCHAR2(10) NOT NULL,
+    "NAME" VARCHAR2(60),
+    "JUSHO" VARCHAR2(100),
+    "CREATED_AT" DATE,
+    CONSTRAINT "KOKYAKU_PK" PRIMARY KEY ( "KOKYAKU_ID" )
+);
 ```
 
 ## Execute `import.ctl`
