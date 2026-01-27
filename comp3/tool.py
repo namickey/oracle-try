@@ -25,6 +25,7 @@ def encode_comp3(value):
     return bytes.fromhex(bcd_str)
 
 def printHex(data):
+    print('0x ', end='')
     print(' '.join(f'{b:02X}' for b in data))
 
 def output_file(filename, data):
@@ -49,5 +50,9 @@ encoded = encode_comp3(9876)
 printHex(encoded)
 
 encoded = encode_comp3(5432154321)
+printHex(encoded)
+output_file('b.txt', encoded)
+
+encoded = encode_comp3(-1234)
 printHex(encoded)
 output_file('b.txt', encoded)
