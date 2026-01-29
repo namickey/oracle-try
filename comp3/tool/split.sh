@@ -6,6 +6,7 @@
 
 INPUT_FILE="output.txt"
 OUTPUT_FILE="output_with_newlines.txt"
+NEWLINE=$'\n'   # WindowsでCRLFが必要なら $'\r\n' に変更
 
 # 出力ファイルを初期化
 > "$OUTPUT_FILE"
@@ -30,7 +31,7 @@ while [ "$offset" -lt "$file_size" ]; do
 
     # レコード本体を抽出して出力
     dd if="$INPUT_FILE" bs=1 skip=$offset count=$record_length status=none >> "$OUTPUT_FILE"
-    printf '\n' >> "$OUTPUT_FILE"
+    printf '%b' "$NEWLINE" >> "$OUTPUT_FILE"
 
     # 次のレコードへ
     offset=$((offset + record_length))
