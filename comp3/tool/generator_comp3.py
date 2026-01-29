@@ -6,7 +6,7 @@ f = open('output.txt', 'wb')
 len_list = [400, 500, 700, 900, 1000]
 fill_list = ["A", "B", "C", "D", "E"]
 
-for i in range(10):
+for i in range(1000):
     record_len = len_list[i % len(len_list)]
     fill_char = fill_list[i % len(fill_list)]
     f.write(str(record_len).zfill(4).encode('utf-8'))
