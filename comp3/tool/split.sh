@@ -7,6 +7,7 @@
 INPUT_FILE="output.txt"
 OUTPUT_FILE="output_with_newlines.txt"
 NEWLINE=$'\n'      # CRLFが必要なら $'\r\n'
+DEBUG=1            # 1でヘッダ情報を表示、0で抑制
 
 # 必要コマンドチェック
 command -v hexdump >/dev/null || { echo "hexdumpが見つかりません" >&2; exit 1; }
@@ -32,23 +33,26 @@ while [ "$offset" -lt "$file_size" ]; do
     len_le=$((16#$b4$b3$b2$b1))
 
     # ASCII数字の場合の候補（例: '0032'）
+    if [ "$DEBUG" -eq 1 ]; then
+        echo "offset=$offset bytes=$b1$b2$b3$b4 len_be=$len_be len_le=$len_le ascii=${ascii_candidate:-N/A} remaining=$remaining" >&2
+    fi
+
     ascii_candidate=""
     if printf '%s%s%s%s' "$b1" "$b2" "$b3" "$b4" | grep -Eq '^(30|31|32|33|34|35|36|37|38|39){4}$'; then
         ascii_digits=$(printf "\\x$b1\\x$b2\\x$b3\\x$b4")
-        ascii_candidate=${ascii_digits##+(0)}  # 先頭ゼロ除去
-        [ -z "$ascii_candidate" ] && ascii_candidate=0
+        ascii_candidate=$((10#$ascii_digits))
     fi
 
     remaining=$((file_size - offset))
     chosen_len=0
 
     # 妥当な長さを優先順位で決定
-    if [ "$len_be" -ge 4 ] && [ $((offset + len_be)) -le "$file_size" ]; then
+    if [ -n "$ascii_candidate" ] && [ "$ascii_candidate" -ge 4 ] && [ $((offset + ascii_candidate)) -le "$file_size" ]; then
+        chosen_len=$ascii_candidate
+    elif [ "$len_be" -ge 4 ] && [ $((offset + len_be)) -le "$file_size" ]; then
         chosen_len=$len_be
     elif [ "$len_le" -ge 4 ] && [ $((offset + len_le)) -le "$file_size" ]; then
         chosen_len=$len_le
-    elif [ -n "$ascii_candidate" ] && [ "$ascii_candidate" -ge 4 ] && [ $((offset + ascii_candidate)) -le "$file_size" ]; then
-        chosen_len=$ascii_candidate
     fi
 
     if [ "$chosen_len" -le 4 ]; then
