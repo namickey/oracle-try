@@ -43,3 +43,33 @@ sqlldr userid=APP/APP@//localhost/FREEPDB1 control=data-import.ctl log=data-impo
 sqlplus APP/APP@//localhost/FREEPDB1
 select * from item;
 ```
+
+
+```
+PIC 9(n) / S9(n)        → DECIMAL(n,0)
+PIC 9(n)V9(m)           → DECIMAL(n+m,m)
+PIC S9(n)V9(m) COMP-3   → DECIMAL(n+m,m)
+PIC X(n)                → CHAR(n)
+PIC N(n)                → NVARCHAR(n)
+```
+
+| 10進数     | 意味例    | 16進（Big Endian） | バイト列              |
+| -------- | ------ | --------------- | ----------------- |
+| 1        | 最小値例   | `00000001`      | `00 00 00 01`     |
+| 10       | 小サイズ   | `0000000A`      | `00 00 00 0A`     |
+| 256      | 1ブロック  | `00000100`      | `00 00 01 00`     |
+| 1024     | 1KB    | `00000400`      | `00 00 04 00`     |
+| **1234** | よくある例  | **`000004D2`**  | **`00 00 04 D2`** |
+| 4096     | 4KB    | `00001000`      | `00 00 10 00`     |
+| 65535    | 2バイト最大 | `0000FFFF`      | `00 00 FF FF`     |
+| 100000   |        | `000186A0`      | `00 01 86 A0`     |
+
+| 10進数    | 16進（Big Endian）                    | バイト列          |
+| ------- | ---------------------------------- | ------------- |
+| -1      | `FFFFFFFF`                         | `FF FF FF FF` |
+| -2      | `FFFFFFFE`                         | `FF FF FF FE` |
+| -10     | `FFFFFFF6`                         | `FF FF FF F6` |
+| -1234   | `FFFFFB2E`                         | `FF FF FB 2E` |
+| -4096   | `FFFFF000`                         | `FF FF F0 00` |
+| -65535  | `FFFF0001`                         | `FF FF 00 01` |
+| -100000 | `FF F E79 60` → 正しくは `FF FE 79 60` | `FF FE 79 60` |
