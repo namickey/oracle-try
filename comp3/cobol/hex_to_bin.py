@@ -11,4 +11,4 @@ with src.open("r", encoding="utf-8") as s, dst.open("wb") as d:
         if not hex_str:
             continue
         data = bytes.fromhex(hex_str)
-        d.write(data + b"\n")  # write record bytes followed by LF
+        d.write(data)  # write record bytes only (fixed-length, no terminator)
