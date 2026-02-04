@@ -1,9 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """Read c.txt and write hex dump to d.txt, preserving newlines."""
 
 import os
-import sys
 
 
 INPUT = "c.txt"
@@ -18,9 +17,7 @@ def _byte_value(ch):
 
 
 def _byte_char(b):
-	"""Return single-byte string for Py2/3."""
-	if sys.version_info[0] >= 3:
-		return bytes((b,))
+	"""Return single-byte string for Py2."""
 	return chr(b)
 
 
