@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 """Split variable-length records and add newlines (ASCII-length first, else BE binary)."""
 
 from __future__ import print_function
@@ -7,18 +8,19 @@ import os
 import sys
 
 
-INPUT = "output.txt"
-OUTPUT = "output_with_newlines.txt"
+INPUT = "b.txt"
+OUTPUT = "c.txt"
 NEWLINE = b"\n"  # change to b"\r\n" for CRLF
 
 
+
 def read_length(b):
-	if len(b) < 4:
+	if len(b) < 2:
 		raise ValueError("length field too short")
-	if all(ord("0") <= ord(x) <= ord("9") for x in b[:4]):
-		return int(b[:4].decode("ascii"))
+	if all(ord("0") <= ord(x) <= ord("9") for x in b[:2]):
+		return int(b[:2].decode("ascii"))
 	value = 0
-	for ch in b[:4]:
+	for ch in b[:2]:
 		value = (value << 8) | ord(ch)
 	return value
 
@@ -28,19 +30,19 @@ def split_file():
 	offset = 0
 	with open(INPUT, "rb") as f_in, open(OUTPUT, "wb") as f_out:
 		while offset < size:
-			head = f_in.read(4)
+			head = f_in.read(2)
 			if not head:
 				break
-			if len(head) < 4:
+			if len(head) < 2:
 				print(u"警告: 不完全な長さフィールド offset={}".format(offset), file=sys.stderr)
 				break
 
 			rec_len = read_length(head)
-			if rec_len <= 4 or offset + rec_len > size:
+			if rec_len <= 2 or offset + rec_len > size:
 				print(u"異常なレコード長: {} (offset={})".format(rec_len, offset), file=sys.stderr)
 				break
 
-			body_len = rec_len - 4
+			body_len = rec_len - 2
 			body = f_in.read(body_len)
 			if len(body) < body_len:
 				print(u"警告: 不完全なレコード offset={}".format(offset), file=sys.stderr)
